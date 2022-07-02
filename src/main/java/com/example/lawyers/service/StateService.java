@@ -23,6 +23,13 @@ public class StateService {
         List<State> stateList=repo.findAll();
         return stateList; 
     }
+    
+    public List<State> getStateListByCountryId(int id)
+    {
+        List<State> stateList=repo.findByCountryId(id);
+        return stateList; 
+    }
+
     public State getStateById(int id)
     {
         State state=repo.findById(id).get();

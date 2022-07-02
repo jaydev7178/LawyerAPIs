@@ -4,24 +4,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 @Entity
-public class LawSubtype {
+public class LawyerLawSubtypeMapping {
     
     @Id 
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-    private String name; 
-    private String icon;
-    private int lawTypeId;
+    private int lawyerId;
+    private int lawSubtypeId;
     private boolean deleted;
     private boolean status;
-    public LawSubtype() {
+    public LawyerLawSubtypeMapping() {
     }
-    public LawSubtype(int id, String name, String icon, int lawTypeId, boolean deleted, boolean status) {
+    public LawyerLawSubtypeMapping(int id, int lawyerId, int lawSubtypeId, boolean deleted, boolean status) {
         this.id = id;
-        this.name = name;
-        this.icon = icon;
-        this.lawTypeId = lawTypeId;
+        this.lawyerId = lawyerId;
+        this.lawSubtypeId = lawSubtypeId;
         this.deleted = deleted;
         this.status = status;
     }
@@ -31,23 +30,17 @@ public class LawSubtype {
     public void setId(int id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
+    public int getLawyerId() {
+        return lawyerId;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setLawyerId(int lawyerId) {
+        this.lawyerId = lawyerId;
     }
-    public String getIcon() {
-        return icon;
+    public int getLawSubtypeId() {
+        return lawSubtypeId;
     }
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-    public int getLawTypeId() {
-        return lawTypeId;
-    }
-    public void setLawTypeId(int lawTypeId) {
-        this.lawTypeId = lawTypeId;
+    public void setLawSubtypeId(int lawSubtypeId) {
+        this.lawSubtypeId = lawSubtypeId;
     }
     public boolean isDeleted() {
         return deleted;
@@ -61,7 +54,7 @@ public class LawSubtype {
     public void setStatus(boolean status) {
         this.status = status;
     }
-
+    
     
     
 }

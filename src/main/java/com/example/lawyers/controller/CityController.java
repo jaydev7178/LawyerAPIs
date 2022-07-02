@@ -29,16 +29,35 @@ public class CityController {
     }
     
     @PostMapping("getCityList")
-    public ResponseEntity<ReturnObj> getStateList()
+    public ResponseEntity<ReturnObj> getCityList(@RequestBody City city)
     {
         try {
-            return ReturnObj.returnHttp("200", service.getCityList());
+            if(city.getId()>0)
+            {
+                return ReturnObj.returnHttp("200", service.getCityListById(city.getId()));    
+            }else
+                return ReturnObj.returnHttp("200", service.getCityList());
+        } catch (Exception e) {
+            return ReturnObj.returnHttp("201", e.getMessage());    
+            //TODO: handle exception
+        }
+    }
+    @PostMapping("getCityListByStateId")
+    public ResponseEntity<ReturnObj> getCityListByStateId(@RequestBody City city)
+    {
+        try {
+            if(city.getStateId()>0)
+            {
+                return ReturnObj.returnHttp("200", service.getCityListByStateId(city.getStateId()));    
+            }else
+                return ReturnObj.returnHttp("200", service.getCityList());
         } catch (Exception e) {
             return ReturnObj.returnHttp("201", e.getMessage());    
             //TODO: handle exception
         }
     }
     
+
     @PostMapping("deleteCity")
     public ResponseEntity<ReturnObj> deleteCity(@RequestBody City dataString)
     {

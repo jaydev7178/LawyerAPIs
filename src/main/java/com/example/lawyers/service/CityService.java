@@ -23,6 +23,21 @@ public class CityService {
         List<City> cityList=repo.findAll();
         return cityList;  
     }
+    
+    public List<City> getCityListByStateId(int id)
+    {
+        List<City> cityList=repo.findBystateId(id);
+        return cityList;  
+    }
+    
+    
+    public City getCityListById(int id)
+    {
+        List<City> cityList=repo.findBystateId(id);
+        return cityList.get(0);  
+    }
+
+
     public void deleteCity(int id)
     {
         repo.deleteById(id);

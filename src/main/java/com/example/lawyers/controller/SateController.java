@@ -31,10 +31,36 @@ public class SateController {
     }
 
     @PostMapping("getStateList")
-    public ResponseEntity<ReturnObj> getStateList()
+    public ResponseEntity<ReturnObj> getStateList(@RequestBody State state)
     {
         try {
-            return ReturnObj.returnHttp("200", service.getStateList());
+
+            if(state.getId()>0)
+            {
+                return ReturnObj.returnHttp("200", service.getStateById(state.getId()));    
+            }else
+            {
+                return ReturnObj.returnHttp("200", service.getStateList());
+            }
+            
+        } catch (Exception e) {
+            return ReturnObj.returnHttp("201", e.getMessage());    
+            //TODO: handle exception
+        }
+    }
+    @PostMapping("getStateListByCountryId")
+    public ResponseEntity<ReturnObj> getStateListByCountryId(@RequestBody State state)
+    {
+        try {
+
+            if(state.getCountryId()>0)
+            {
+                return ReturnObj.returnHttp("200", service.getStateListByCountryId(state.getCountryId()));    
+            }else
+            {
+                return ReturnObj.returnHttp("200", service.getStateList());
+            }
+            
         } catch (Exception e) {
             return ReturnObj.returnHttp("201", e.getMessage());    
             //TODO: handle exception

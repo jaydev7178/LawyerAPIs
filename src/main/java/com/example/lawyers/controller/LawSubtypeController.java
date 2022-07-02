@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.lawyers.model.JwtToken;
 import com.example.lawyers.model.LawSubtype;
@@ -14,6 +15,7 @@ import com.example.lawyers.service.LawSubtypeService;
 import com.example.lawyers.service.LawTypeService;
 
 @Controller
+@RequestMapping("api/lawSubtype/")
 public class LawSubtypeController {
     @Autowired
     private LawSubtypeService service;
@@ -27,12 +29,12 @@ public class LawSubtypeController {
             return ReturnObj.returnHttp("401", output.getError());     
         }
         try {
-            if(lawSubtype.getLawTypeId()>0 )
+            if(lawSubtype.getLawTypeId()<=0 )
             {
-                return ReturnObj.returnHttp("201","Please enter name of law type." );
+                return ReturnObj.returnHttp("201","Please select law type." );
             }
-            
-            if(lawSubtype.getName().isEmpty() || lawSubtype.getName().isBlank())
+            System.out.println(lawSubtype.getLawTypeId());
+            if(lawSubtype.getName()==null || lawSubtype.getName()=="")
             {
                 return ReturnObj.returnHttp("201","Please enter name of law type." );
             }
