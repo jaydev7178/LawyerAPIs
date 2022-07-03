@@ -1,5 +1,8 @@
 package com.example.lawyers.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -37,6 +40,39 @@ public class LawyerLawSubtypeMappingController {
 			lawyerLawSubtypeMapping.setStatus(true);
             service.saveLawyerLawSubtypeMapping(lawyerLawSubtypeMapping);
 
+            return ReturnObj.returnHttp("200", "Law Type saved Sucessfully.");
+            
+        } catch (Exception e) {
+            //TODO: handle exception
+            return ReturnObj.returnHttp("201", e.getMessage()+" "+e.getStackTrace());      
+        }
+    }
+
+    @PostMapping("saveLawyerLawSubtypeMappingInBulk")
+    public ResponseEntity<ReturnObj> saveLawyerLawSubtypeMappingInBulk(@RequestHeader("token") String token,@RequestBody ArrayList<LawyerLawSubtypeMapping> lawyerLawSubtypeMappingList)
+    {
+        JwtToken output= JwtToken.validateToken(token,"lawyer");
+        if(output.getError()!=null)
+        {
+            return ReturnObj.returnHttp("401", output.getError());     
+        }          
+        try {
+            if(lawyerLawSubtypeMappingList.size()>0)
+            {
+                for (LawyerLawSubtypeMapping lawyerLawSubtypeMapping2 : lawyerLawSubtypeMappingList) {
+                    if(lawyerLawSubtypeMapping2.getLawSubtypeId()<=0 )
+                {
+                    continue;
+                    //return ReturnObj.returnHttp("201","Please select law type." );
+                }
+                lawyerLawSubtypeMapping2.setLawyerId(output.getId());
+                lawyerLawSubtypeMapping2.setDeleted(false);
+                lawyerLawSubtypeMapping2.setStatus(true);
+                service.saveLawyerLawSubtypeMapping(lawyerLawSubtypeMapping2);
+        
+                }
+            }
+            
             return ReturnObj.returnHttp("200", "Law Type saved Sucessfully.");
             
         } catch (Exception e) {
