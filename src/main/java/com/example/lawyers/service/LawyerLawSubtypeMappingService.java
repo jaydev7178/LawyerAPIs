@@ -12,6 +12,8 @@ import com.example.lawyers.repository.LawyerLawSubtypeMappingRepository;
 public class LawyerLawSubtypeMappingService {
     @Autowired
     private LawyerLawSubtypeMappingRepository repo;
+    @Autowired
+    private LawSubtypeService lawSubtypeService;
 
     public List<LawyerLawSubtypeMapping> getLawyerLawSubtypeMappingList()
     {
@@ -21,9 +23,15 @@ public class LawyerLawSubtypeMappingService {
     {
         return repo.findById(id).get();
     }
-    public LawyerLawSubtypeMapping getLawyerLawSubtypeMappingByLawyerId(int id)
-    {
-        return repo.findByLawyerId(id);
+    public List<LawyerLawSubtypeMapping> getLawyerLawSubtypeMappingByLawyerId(int id)
+    {   List<LawyerLawSubtypeMapping>lawyerLawSubtypeMappingList =repo.findByLawyerId(id);
+        //lawSubtypeService=new LawSubtypeService();
+        for (LawyerLawSubtypeMapping lawyerLawSubtypeMapping : lawyerLawSubtypeMappingList) {
+            lawyerLawSubtypeMapping.setLawSubtypeName(lawSubtypeService.getLawSubtypeById(lawyerLawSubtypeMapping.getLawSubtypeId()).getName());
+            // System.out.println("id is "+lawyerLawSubtypeMapping.getLawSubtypeId());
+            // System.out.println(lawSubtypeService.getLawSubtypeById(lawyerLawSubtypeMapping.getLawSubtypeId()).getName());
+        }
+        return lawyerLawSubtypeMappingList;
     }
     public LawyerLawSubtypeMapping getLawyerLawSubtypeMappingByLawSubtypeId(int id)
     {
@@ -33,5 +41,10 @@ public class LawyerLawSubtypeMappingService {
     public void saveLawyerLawSubtypeMapping(LawyerLawSubtypeMapping lawSubtype)
     {
         repo.save(lawSubtype);
+    }
+
+    public void deleteLawyerLawSubtypeMappingById(int id)
+    {
+        repo.deleteById(id);
     }
 }

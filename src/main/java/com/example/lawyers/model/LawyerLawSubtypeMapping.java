@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class LawyerLawSubtypeMapping {
@@ -13,6 +14,8 @@ public class LawyerLawSubtypeMapping {
     private int id;
     private int lawyerId;
     private int lawSubtypeId;
+    @Transient
+    private String lawSubtypeName;
     private boolean deleted;
     private boolean status;
     public LawyerLawSubtypeMapping() {
@@ -53,6 +56,12 @@ public class LawyerLawSubtypeMapping {
     }
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    public String getLawSubtypeName() {
+        return lawSubtypeName;
+    }
+    public void setLawSubtypeName(String lawSubtypeName) {
+        this.lawSubtypeName = lawSubtypeName;
     }
     
     
