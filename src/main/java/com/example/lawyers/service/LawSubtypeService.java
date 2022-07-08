@@ -21,10 +21,10 @@ public class LawSubtypeService {
     {
         return repo.findById(id).get();
     }
-    // public List<LawSubtype> getLawSubtypeByLawTypeId(int lawTypeId)
-    // {
-    //     return repo.findByLawTypeId(lawTypeId);
-    // }
+    public List<LawSubtype> getLawSubtypeByLawTypeId(int lawTypeId)
+    {
+        return repo.findByLawTypeId(lawTypeId);
+    }
         
 
     public void saveLawSubtype(LawSubtype lawSubtype)

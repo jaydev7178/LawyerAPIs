@@ -74,27 +74,27 @@ public class LawSubtypeController {
             return ReturnObj.returnHttp("201", e.getMessage()+" "+e.getStackTrace());    
         }
     }
-    // @PostMapping("getLawSubtypeByLawTypeIdList")
-    // public ResponseEntity<ReturnObj> getLawSubtypeByLawTypeIdList(@RequestHeader("token") String token,  @RequestBody LawSubtype lawSubtype)
-    // {
-    //     JwtToken output= JwtToken.validateToken(token,"lawyer");
-    //     if(output.getError()!=null)
-    //     {
-    //         return ReturnObj.returnHttp("401", output.getError());     
-    //     }
-    //     try {
+    @PostMapping("getLawSubtypeByLawTypeIdList")
+    public ResponseEntity<ReturnObj> getLawSubtypeByLawTypeIdList(@RequestHeader("token") String token,  @RequestBody LawSubtype lawSubtype)
+    {
+        JwtToken output= JwtToken.validateToken(token,"lawyer");
+        if(output.getError()!=null)
+        {
+            return ReturnObj.returnHttp("401", output.getError());     
+        }
+        try {
 
-    //         if(lawSubtype.getLawTypeId()>0)
-    //         {
-    //             return ReturnObj.returnHttp("200", service.getLawSubtypeByLawTypeId(lawSubtype.getLawTypeId()));    
-    //         }else
-    //         {
-    //             return ReturnObj.returnHttp("201", "Please Select Law Type.");    
-    //         }
+            if(lawSubtype.getLawTypeId()>0)
+            {
+                return ReturnObj.returnHttp("200", service.getLawSubtypeByLawTypeId(lawSubtype.getLawTypeId()));    
+            }else
+            {
+                return ReturnObj.returnHttp("201", "Please Select Law Type.");    
+            }
 
-    //     } catch (Exception e) {
-    //         return ReturnObj.returnHttp("201", e.getMessage()+" "+e.getStackTrace());    
-    //     }
-    // }
+        } catch (Exception e) {
+            return ReturnObj.returnHttp("201", e.getMessage()+" "+e.getStackTrace());    
+        }
+    }
     
 }
