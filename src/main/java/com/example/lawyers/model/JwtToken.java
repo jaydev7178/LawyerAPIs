@@ -59,7 +59,7 @@ public class JwtToken {
             LocalDateTime myDateObj = LocalDateTime.now();
             DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
             //Date date = format.parse(LocalDateTime.now());
-            String validDateTime=myDateObj.plusDays(1).toString();
+            String validDateTime=myDateObj.plusMonths(1).toString();
             
             Map<String, Object> payloadClaims = new HashMap<>();
             payloadClaims.put("id", id);

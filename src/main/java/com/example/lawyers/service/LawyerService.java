@@ -6,13 +6,25 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.lawyers.model.City;
+import com.example.lawyers.model.Country;
 import com.example.lawyers.model.Lawyer;
+import com.example.lawyers.model.State;
+import com.example.lawyers.repository.CityRepository;
+import com.example.lawyers.repository.CountryRepository;
 import com.example.lawyers.repository.LawyerRepository;
+import com.example.lawyers.repository.StateRepository;
 
 @Service
 public class LawyerService {
     @Autowired
     private LawyerRepository repo;
+    @Autowired
+    private StateRepository staterepo;
+    @Autowired
+    private CountryRepository countryrepo;
+    @Autowired
+    private CityRepository cityrepo;
 
     public void saveLawyer(Lawyer lawyer)
     {
@@ -21,13 +33,30 @@ public class LawyerService {
 
     public  List<Lawyer> getLawyerList()
     {
-        return repo.findAll();
+        List<Lawyer> lawyerList= repo.findAll();
+        for (Lawyer lawyer : lawyerList) {
+            City city=cityrepo.findById(lawyer.getCityId()).get();
+            State state=staterepo.findById(city.getStateId()).get();
+            Country country=countryrepo.findById(state.getCountryId()).get();
+            lawyer.setCityName(city.getName());
+            lawyer.setStateName(state.getName());
+            lawyer.setCountryName(country.getName());
+        }
+        return lawyerList;
     }
     
     public Lawyer getLawyerById(int id)
     {
-        Optional<Lawyer> lawyer=repo.findById(id);
-        return lawyer.get();
+        List<Lawyer> lawyerList=repo.findById(id);
+        for (Lawyer lawyer : lawyerList) {
+            City city=cityrepo.findById(lawyer.getCityId()).get();
+            State state=staterepo.findById(city.getStateId()).get();
+            Country country=countryrepo.findById(state.getCountryId()).get();
+            lawyer.setCityName(city.getName());
+            lawyer.setStateName(state.getName());
+            lawyer.setCountryName(country.getName());
+        }
+        return lawyerList.get(0);
     }
     
     public Lawyer findByIdAndDeleted(int id, boolean deleted)

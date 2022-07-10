@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.lawyers.model.LawSubtype;
 import com.example.lawyers.model.LawyerLawSubtypeMapping;
 import com.example.lawyers.repository.LawyerLawSubtypeMappingRepository;
 
@@ -14,6 +15,7 @@ public class LawyerLawSubtypeMappingService {
     private LawyerLawSubtypeMappingRepository repo;
     @Autowired
     private LawSubtypeService lawSubtypeService;
+    
 
     public List<LawyerLawSubtypeMapping> getLawyerLawSubtypeMappingList()
     {
@@ -27,7 +29,10 @@ public class LawyerLawSubtypeMappingService {
     {   List<LawyerLawSubtypeMapping>lawyerLawSubtypeMappingList =repo.findByLawyerId(id);
         //lawSubtypeService=new LawSubtypeService();
         for (LawyerLawSubtypeMapping lawyerLawSubtypeMapping : lawyerLawSubtypeMappingList) {
-            lawyerLawSubtypeMapping.setLawSubtypeName(lawSubtypeService.getLawSubtypeById(lawyerLawSubtypeMapping.getLawSubtypeId()).getName());
+            LawSubtype lawSubtype=lawSubtypeService.getLawSubtypeById(lawyerLawSubtypeMapping.getLawSubtypeId());
+            lawyerLawSubtypeMapping.setLawSubtypeName(lawSubtype.getName());
+            lawyerLawSubtypeMapping.setLawSubtypeObj(lawSubtype);
+            
             // System.out.println("id is "+lawyerLawSubtypeMapping.getLawSubtypeId());
             // System.out.println(lawSubtypeService.getLawSubtypeById(lawyerLawSubtypeMapping.getLawSubtypeId()).getName());
         }

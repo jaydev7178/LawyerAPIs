@@ -12,6 +12,7 @@ public class LawSubtype {
     private int id;
     private String name; 
     private String icon;
+    private String description;
     private int lawTypeId;
     private boolean deleted;
     private boolean status;
@@ -60,6 +61,12 @@ public class LawSubtype {
     }
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     

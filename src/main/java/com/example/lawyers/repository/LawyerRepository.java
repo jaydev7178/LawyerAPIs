@@ -9,6 +9,7 @@ import com.example.lawyers.model.Lawyer;
 
 @Repository
 public interface LawyerRepository extends JpaRepository<Lawyer, Integer>{
+    public List<Lawyer> findById(int id);
     public Lawyer findByEmail(String email);
     public List<Lawyer> findByIdAndDeleted(int id, boolean deleted);
 }

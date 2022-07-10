@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Lawyer {
@@ -21,6 +22,12 @@ public class Lawyer {
     private String image;
     private String address;
     private int cityId;
+    @Transient
+    private String cityName;
+    @Transient
+    private String stateName;
+    @Transient
+    private String countryName;
     private boolean deleted;
     private boolean status;
     public Lawyer() {
@@ -125,6 +132,24 @@ public class Lawyer {
     }
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    public String getCityName() {
+        return cityName;
+    }
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+    public String getStateName() {
+        return stateName;
+    }
+    public void setStateName(String stateName) {
+        this.stateName = stateName;
+    }
+    public String getCountryName() {
+        return countryName;
+    }
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
     
     

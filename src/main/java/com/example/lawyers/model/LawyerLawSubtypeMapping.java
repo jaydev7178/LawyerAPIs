@@ -16,6 +16,8 @@ public class LawyerLawSubtypeMapping {
     private int lawSubtypeId;
     @Transient
     private String lawSubtypeName;
+    @Transient
+    private LawSubtype lawSubtypeObj;
     private boolean deleted;
     private boolean status;
     public LawyerLawSubtypeMapping() {
@@ -62,6 +64,12 @@ public class LawyerLawSubtypeMapping {
     }
     public void setLawSubtypeName(String lawSubtypeName) {
         this.lawSubtypeName = lawSubtypeName;
+    }
+    public LawSubtype getLawSubtypeObj() {
+        return lawSubtypeObj;
+    }
+    public void setLawSubtypeObj(LawSubtype lawSubtypeObj) {
+        this.lawSubtypeObj = lawSubtypeObj;
     }
     
     

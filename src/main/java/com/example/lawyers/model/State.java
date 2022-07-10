@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class State {
@@ -12,6 +13,8 @@ public class State {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     private int countryId;
+    @Transient
+    private String countryName; 
     private String name; 
     private boolean deleted;
     private boolean status;
@@ -53,6 +56,12 @@ public class State {
     }
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    public String getCountryName() {
+        return countryName;
+    }
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     
