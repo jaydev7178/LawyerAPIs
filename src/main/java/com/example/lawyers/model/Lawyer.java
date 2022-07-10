@@ -30,6 +30,7 @@ public class Lawyer {
     private String countryName;
     private boolean deleted;
     private boolean status;
+    private String gender;
     public Lawyer() {
     }
     public Lawyer(int id, String name, String email, String mobile, String password, String experience, float fees,
