@@ -6,6 +6,7 @@ import java.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -31,26 +32,26 @@ public class LawyerController {
     public ResponseEntity<ReturnObj> registerLawyer(@RequestBody Lawyer lawyer)
     {
         try {
-            if(lawyer.getEmail()==null ||lawyer.getMobile()=="")
+            if(lawyer.getEmail()==null &&lawyer.getMobile()=="")
 			{
 				return ReturnObj.returnHttp("201","Please enter email." );
 			}
 			
-			if(lawyer.getPassword()==null ||lawyer.getPassword()=="")
+			if(lawyer.getPassword()==null &&lawyer.getPassword()=="")
 			{
 				return ReturnObj.returnHttp("201","Please enter Password." );
 			}
 			
-			if(lawyer.getMobile()==null ||lawyer.getMobile()=="")
+			if(lawyer.getMobile()==null &&lawyer.getMobile()=="")
 			{
 				return ReturnObj.returnHttp("201","Please enter Mobile." );
 			}
 			
-			if(lawyer.getName()==null ||lawyer.getName()=="")
+			if(lawyer.getName()==null &&lawyer.getName()=="")
 			{
 				return ReturnObj.returnHttp("201","Please enter Name." );
 			}
-			if(lawyer.getDob()!=null ||lawyer.getDob()!="")
+			if(lawyer.getDob()!=null &&lawyer.getDob()!="")
 			{
 				LocalDate dob = LocalDate.parse(lawyer.getDob());
 				LocalDate curDate = LocalDate.now();  
@@ -62,11 +63,11 @@ public class LawyerController {
             {
                 return ReturnObj.returnHttp("201","Please enter Date of birth." );
             }
-			if(lawyer.getEmail().isEmpty() || lawyer.getEmail().isBlank())
+			if(lawyer.getEmail()==null && lawyer.getEmail()=="")
 			{
 				return ReturnObj.returnHttp("201","Please enter email." );
 			}
-			if(lawyer.getLicenseNo().isEmpty() || lawyer.getLicenseNo().isBlank())
+			if(lawyer.getLicenseNo()==null && lawyer.getLicenseNo()=="")
 			{
 				return ReturnObj.returnHttp("201","Please enter LicenseNo." );
 			}
@@ -80,9 +81,75 @@ public class LawyerController {
         }
     }
     
+    @PostMapping("updateProfile")
+    @Transactional 
+    public ResponseEntity<ReturnObj> updateLawyer(@RequestHeader("token") String token, @RequestBody Lawyer lawyer)
+    {
+        JwtToken output= JwtToken.validateToken(token,"lawyer");
+        if(output.getError()!=null)
+        {
+            return ReturnObj.returnHttp("401", output.getError());     
+        }
+        try {
+            lawyer.setId(output.getId());
+            if(lawyer.getEmail()==null && "".equals(lawyer.getMobile()))
+			{
+				return ReturnObj.returnHttp("201","Please enter email." );
+			}
+			
+			// if(lawyer.getPassword()==null ||lawyer.getPassword()=="")
+			// {
+			// 	return ReturnObj.returnHttp("201","Please enter Password." );
+			// }
+			
+			if(lawyer.getMobile()==null && lawyer.getMobile()=="")
+			{
+				return ReturnObj.returnHttp("201","Please enter Mobile." );
+			}
+			
+			if(lawyer.getName()==null && lawyer.getName()=="")
+			{
+				return ReturnObj.returnHttp("201","Please enter Name." );
+			}
+			if(lawyer.getDob()!=null && lawyer.getDob()!="")
+			{
+				LocalDate dob = LocalDate.parse(lawyer.getDob());
+				LocalDate curDate = LocalDate.now();  
+				if(Period.between(dob, curDate).getYears()<18)
+				{
+					return ReturnObj.returnHttp("201","You can't update because your age is below 18." );
+				}
+			}else
+            {
+                return ReturnObj.returnHttp("201","Please enter Date of birth." );
+            }
+			if(lawyer.getEmail()==null  && lawyer.getEmail()=="")
+			{
+				return ReturnObj.returnHttp("201","Please enter email." );
+			}
+			// if(lawyer.getLicenseNo()!=null || lawyer.getLicenseNo()!="")
+			// {
+			// 	return ReturnObj.returnHttp("201","Please enter LicenseNo." );
+			// }
+            lawyer.setDeleted(false);
+			lawyer.setStatus(true);
+			
+            //service.saveLawyer(lawyer);
+            int count=repo.updateProfile(lawyer.getName(), lawyer.getEmail(), lawyer.getMobile(), lawyer.getExperience(), lawyer.getDob(), lawyer.getImage(), lawyer.getAddress(), lawyer.getCity_id(), lawyer.getGender(), lawyer.getId());
+            if(count==0)
+            {
+                return ReturnObj.returnHttp("201", "Some internal issue occurred while updating.");    
+            }
+            return ReturnObj.returnHttp("200", "Lawyer updated successfully");
+        } catch (Exception e) {
+            return ReturnObj.returnHttp("201", e.getMessage());    
+        }
+    }
+    
     @PostMapping("login")
     public ResponseEntity<ReturnObj> login(@RequestBody Login login)
     {
+        
         try {
             if(login.getUsername()==null || login.getUsername()=="")
             {

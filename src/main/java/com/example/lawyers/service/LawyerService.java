@@ -35,7 +35,7 @@ public class LawyerService {
     {
         List<Lawyer> lawyerList= repo.findAll();
         for (Lawyer lawyer : lawyerList) {
-            City city=cityrepo.findById(lawyer.getCityId()).get();
+            City city=cityrepo.findById(lawyer.getCity_id()).get();
             State state=staterepo.findById(city.getStateId()).get();
             Country country=countryrepo.findById(state.getCountryId()).get();
             lawyer.setCityName(city.getName());
@@ -49,7 +49,7 @@ public class LawyerService {
     {
         List<Lawyer> lawyerList=repo.findById(id);
         for (Lawyer lawyer : lawyerList) {
-            City city=cityrepo.findById(lawyer.getCityId()).get();
+            City city=cityrepo.findById(lawyer.getCity_id()).get();
             State state=staterepo.findById(city.getStateId()).get();
             Country country=countryrepo.findById(state.getCountryId()).get();
             lawyer.setCityName(city.getName());

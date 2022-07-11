@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-@Entity
+@Entity(name="lawyer")
 public class Lawyer {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Lawyer {
     private String licenseNo;
     private String image;
     private String address;
-    private int cityId;
+    private int city_id;
     @Transient
     private String cityName;
     @Transient
@@ -34,7 +34,7 @@ public class Lawyer {
     public Lawyer() {
     }
     public Lawyer(int id, String name, String email, String mobile, String password, String experience, float fees,
-            String dob, String licenseNo, String image, String address, int cityId, boolean deleted, boolean status) {
+            String dob, String licenseNo, String image, String address, int city_id, boolean deleted, boolean status) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -46,7 +46,7 @@ public class Lawyer {
         this.licenseNo = licenseNo;
         this.image = image;
         this.address = address;
-        this.cityId = cityId;
+        this.city_id = city_id;
         this.deleted = deleted;
         this.status = status;
     }
@@ -116,11 +116,11 @@ public class Lawyer {
     public void setAddress(String address) {
         this.address = address;
     }
-    public int getCityId() {
-        return cityId;
+    public int getCity_id() {
+        return city_id;
     }
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
+    public void setCity_id(int city_id) {
+        this.city_id = city_id;
     }
     public boolean isDeleted() {
         return deleted;
@@ -151,6 +151,12 @@ public class Lawyer {
     }
     public void setCountryName(String countryName) {
         this.countryName = countryName;
+    }
+    public String getGender() {
+        return gender;
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
     }
     
     
